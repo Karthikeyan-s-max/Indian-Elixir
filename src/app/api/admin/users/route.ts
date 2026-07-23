@@ -5,26 +5,31 @@ import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/guards";
 
 export async function GET() {
-  const session = await requireAdmin();
-  if (!session) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  try {
+    const session = await requireAdmin();
+    if (!session) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
-  const users = await prisma.user.findMany({
-    where: { role: "USER" },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      phone: true,
-      createdAt: true,
-      _count: { select: { orders: true } },
-      orders: {
-        select: { totalAmount: true, createdAt: true, status: true },
-        orderBy: { createdAt: "desc" },
-        take: 5,
+    const users = await prisma.user.findMany({
+      where: { role: "USER" },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        createdAt: true,
+        _count: { select: { orders: true } },
+        orders: {
+          select: { totalAmount: true, createdAt: true, status: true },
+          orderBy: { createdAt: "desc" },
+          take: 5,
+        },
       },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+      orderBy: { createdAt: "desc" },
+    });
 
-  return NextResponse.json({ users });
+    return NextResponse.json({ users });
+  } catch (err) {
+    console.error("Admin users GET error:", err);
+    return NextResponse.json({ users: [] });
+  }
 }
