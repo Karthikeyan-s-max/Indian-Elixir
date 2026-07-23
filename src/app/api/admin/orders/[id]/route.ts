@@ -1,12 +1,25 @@
 export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+export const revalidate = 0;
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/guards";
 import { orderStatusSchema } from "@/lib/validations";
 
-export async function GET() {
-  return NextResponse.json({ error: "Use PATCH to update order status" }, { status: 405 });
+export async function GET(_req: Request, { params }: { params: { id: string } }) {
+  try {
+    const session = await requireAdmin();
+    if (!session) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    const order = await prisma.order.findUnique({
+      where: { id: params.id },
+      include: { items: true, user: true },
+    });
+    if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
+    return NextResponse.json({ order });
+  } catch (err) {
+    return NextResponse.json({ error: "Order not found" }, { status: 404 });
+  }
 }
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
