@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 
 export const metadata = { title: "Our Story | Indian Elixir" };
 
+export const dynamic = "force-dynamic";
+
 const philosophy = [
   {
     title: "Stone-Ground Murungai",
