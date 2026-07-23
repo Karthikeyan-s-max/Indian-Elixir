@@ -2,7 +2,6 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 import { NextRequest, NextResponse } from "next/server";
-import * as XLSX from "xlsx";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/guards";
 
@@ -41,6 +40,8 @@ export async function GET(req: NextRequest) {
       Status: o.status,
       "Payment Method": o.paymentMethod,
     }));
+
+    const XLSX = await import("xlsx");
 
     const worksheet = XLSX.utils.json_to_sheet(rows);
     worksheet["!cols"] = [
