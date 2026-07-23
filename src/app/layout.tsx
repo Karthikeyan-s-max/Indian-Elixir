@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import { Literata, Inter } from "next/font/google";
 import "./globals.css";
