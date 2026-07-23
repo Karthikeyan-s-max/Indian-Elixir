@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: #FEF9EF;
+}
+
+::selection {
+  background-color: #83540B;
+  color: #FEF9EF;
+}
+
+.container-page {
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-forest px-8 py-4 text-sm font-semibold uppercase tracking-wide text-cream transition hover:bg-forest-400 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg border-2 border-forest bg-transparent px-8 py-4 text-sm font-semibold uppercase tracking-wide text-forest transition hover:bg-forest/5;
+}
+
+.btn-copper {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-copper px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white shadow-popover transition hover:bg-copper-700;
+}
+
+.input-field {
+  @apply w-full rounded-lg border border-ink-border/50 bg-cream px-4 py-3 text-sm text-ink placeholder:text-ink-muted/50 focus:border-copper focus:outline-none focus:ring-2 focus:ring-copper/20;
+}
+
+.label-field {
+  @apply mb-1.5 block text-sm font-medium text-ink;
+}
+
+.card {
+  @apply rounded-xl2 border border-ink-border/30 bg-cream shadow-card;
+}
+
+.eyebrow {
+  @apply text-sm font-semibold uppercase tracking-[0.1em] text-copper;
+}
